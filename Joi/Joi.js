@@ -1,9 +1,9 @@
-import userValidation from "../validation/user_validation";
+import elonValidation from "../validation/elon_validation.js";
 
-router.post("/admin/login", (req, res) => {
+router.post("/elon/create", (req, res) => {
   console.log(req.body);
   res.status(201).send("Zor");
-  const { error } = userValidation(req.body);
+  const { error } = elonValidation(req.body);
 
   if (error) {
     console.log(error);
