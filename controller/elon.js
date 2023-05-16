@@ -1,47 +1,56 @@
 import pool from "../config/db_config.js";
 
+const getElon = async (req, res) => {
+  try {
+    let elonList = await pool.query("select * from elon");
+    res.status(201).send(elonList.rows);
+  } catch {
+    res.send({ msg: "Error" });
+  }
+};
+
 const elonCreate = async (req, res) => {
   try {
     const {
-      sana,
-      vaqt,
-      yunalish,
-      ichki_yunalish,
-      tadbir_turi,
+      sanaValue,
+      vaqtValue,
+      bulimValue,
+      ichkiBulimValue,
+      radioValue,
       link,
       ismsharif,
       professiya,
       telifon1,
       telifon2,
-      elon_description,
+      description,
       mavzumatni,
-      img_url,
+      elon_img_url,
     } = req.body;
 
-    let sanaValidation =
-      sana.trim() === ""
+    let sanaValueValidation =
+      sanaValue.trim() === ""
         ? res.status(401).send({ msg: "sana kiriting?" })
-        : sana.trim();
+        : sanaValue.trim();
 
-    let vaqtValidation =
-      vaqt.trim() === ""
+    let vaqtValueValidation =
+      vaqtValue.trim() === ""
         ? res.status(401).send({ msg: "vaqt kiriting?" })
-        : vaqt.trim();
+        : vaqtValue.trim();
 
-    let yunalishValidation =
-      yunalish.trim() === ""
+    let bulimValueValidation =
+      bulimValue.trim() === ""
         ? res.status(401).send({ msg: "yunalish kiriting?" })
-        : yunalish.trim();
+        : bulimValue.trim();
 
-    let ichki_yunalishValidation =
-      ichki_yunalish.trim() === ""
+    let ichkiBulimValueValidation =
+      ichkiBulimValue.trim() === ""
         ? res.status(401).send({ msg: "ichki yunalish kiriting?" })
-        : ichki_yunalish.trim();
+        : ichkiBulimValue.trim();
 
-    let tadbir_turiValidation =
-      tadbir_turi.trim() === ""
+    let radioValueValidation =
+      radioValue.trim() === ""
         ? res.status(401).send({ msg: "tadbir turi kiriting?" })
-        : tadbir_turi.trim();
+        : radioValue.trim();
 
     let linkValidation =
       link.trim() === ""
@@ -68,39 +77,39 @@ const elonCreate = async (req, res) => {
         ? res.status(401).send({ msg: "telifon nommer kiriting?" })
         : telifon2.trim();
 
-    let elon_descriptionValidation =
-      elon_description.trim() === ""
+    let descriptionValidation =
+      description.trim() === ""
         ? res.status(401).send({ msg: "description nommer kiriting?" })
-        : elon_description.trim();
+        : description.trim();
 
     let mavzumatniValidation =
       mavzumatni.trim() === ""
         ? res.status(401).send({ msg: "mavzumatni kiriting?" })
         : mavzumatni.trim();
 
-    let img_urlValidation =
-      img_url.trim() === ""
+    let elon_img_urlValidation =
+      elon_img_url.trim() === ""
         ? res.status(401).send({ msg: "images kiriting?" })
-        : img_url.trim();
+        : elon_img_url.trim();
 
     await pool.query(
       `INSERT INTO elon(sana, vaqt, yunalish, ichki_yunalish, tadbir_turi, link, ismsharif, 
         professiya, telifon1, telifon2, elon_description, mavzumatni, img_url)
          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
       [
-        sanaValidation,
-        vaqtValidation,
-        yunalishValidation,
-        ichki_yunalishValidation,
-        tadbir_turiValidation,
+        sanaValueValidation,
+        vaqtValueValidation,
+        bulimValueValidation,
+        ichkiBulimValueValidation,
+        radioValueValidation,
         linkValidation,
         ismsharifValidation,
         professiyaValidation,
         telifon1Validation,
         telifon2Validation,
-        elon_descriptionValidation,
+        descriptionValidation,
         mavzumatniValidation,
-        img_urlValidation,
+        elon_img_urlValidation,
       ]
     );
 
@@ -110,4 +119,8 @@ const elonCreate = async (req, res) => {
   }
 };
 
-export { elonCreate };
+export { elonCreate, getElon };
+
+// delete from elon where id = 'bb92dcb4-e02a-4c84-ad84-d36bf0ae196f';
+
+// update elon set tasdiqlangan = true where id = '860dfbc4-d33d-4186-9f09-0993cf4d404e';

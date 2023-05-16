@@ -16,5 +16,6 @@ CREATE TABLE elon (
     telifon2 VARCHAR NOT NULL,
     elon_description VARCHAR NOT NULL,
     mavzumatni VARCHAR NOT NULL,
-    img_url VARCHAR NOT NULL
+    img_url VARCHAR NOT NULL,
+    tasdiqlangan VARCHAR NOT NULL DEFAULT ''
 );
