@@ -123,4 +123,4 @@ export { elonCreate, getElon };
 
 // delete from elon where id = 'bb92dcb4-e02a-4c84-ad84-d36bf0ae196f';
 
-// update elon set tasdiqlangan = true where id = '860dfbc4-d33d-4186-9f09-0993cf4d404e';
+// update elon set tasdiqlangan = true where id = '89a46a25-b9c1-4e52-8f8a-e79f64cfbf04';
