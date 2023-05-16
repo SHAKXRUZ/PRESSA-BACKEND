@@ -9,6 +9,26 @@ const getElon = async (req, res) => {
   }
 };
 
+const elonHeaderSearch = async (req, res) => {
+  try {
+    const { search } = req.body;
+
+    let searchValidation =
+      search.trim() === ""
+        ? res.status(401).send({ msg: "Text kiriting?" })
+        : search.trim();
+
+    let searchElonObj = await pool.query(
+      "select * from elon where ismsharif = $1",
+      [searchValidation]
+    );
+    console.log(searchElonObj.rows);
+    res.status(201).send(searchElonObj.rows[0]);
+  } catch {
+    res.send({ msg: "Error" });
+  }
+};
+
 const elonCreate = async (req, res) => {
   try {
     const {
@@ -119,7 +139,7 @@ const elonCreate = async (req, res) => {
   }
 };
 
-export { elonCreate, getElon };
+export { elonCreate, getElon, elonHeaderSearch };
 
 // delete from elon where id = 'bb92dcb4-e02a-4c84-ad84-d36bf0ae196f';
 
