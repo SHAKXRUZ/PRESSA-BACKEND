@@ -11,19 +11,71 @@ const getElon = async (req, res) => {
 
 const elonHeaderSearch = async (req, res) => {
   try {
-    const { search } = req.body;
+    const { search } = req.headers;
 
-    let searchValidation =
-      search.trim() === ""
-        ? res.status(401).send({ msg: "Text kiriting?" })
-        : search.trim();
+    let searchToLowerCase = search.toLowerCase();
 
-    let searchElonObj = await pool.query(
+    let searchValidation = searchToLowerCase.trim();
+
+    let objIsmsharif = await pool.query(
       "select * from elon where ismsharif = $1",
       [searchValidation]
     );
-    console.log(searchElonObj.rows);
-    res.status(201).send(searchElonObj.rows[0]);
+
+    let objVaqt = await pool.query("select * from elon where vaqt = $1", [
+      searchValidation,
+    ]);
+
+    let objSana = await pool.query("select * from elon where sana = $1", [
+      searchValidation,
+    ]);
+
+    let objOnline = await pool.query(
+      "select * from elon where tadbir_turi = $1",
+      [searchValidation]
+    );
+
+    let objYunalish = await pool.query(
+      "select * from elon where yunalish = $1",
+      [searchValidation]
+    );
+
+    if (
+      !objVaqt.rows[0] &&
+      !objSana.rows[0] &&
+      !objOnline.rows[0] &&
+      !objYunalish.rows[0]
+    ) {
+      return res.status(201).send(objIsmsharif.rows);
+    } else if (
+      !objIsmsharif.rows[0] &&
+      !objSana.rows[0] &&
+      !objOnline.rows[0] &&
+      !objYunalish.rows[0]
+    ) {
+      return res.status(201).send(objVaqt.rows);
+    } else if (
+      !objIsmsharif.rows[0] &&
+      !objVaqt.rows[0] &&
+      !objOnline.rows[0] &&
+      !objYunalish.rows[0]
+    ) {
+      return res.status(201).send(objSana.rows);
+    } else if (
+      !objIsmsharif.rows[0] &&
+      !objVaqt.rows[0] &&
+      !objSana.rows[0] &&
+      !objYunalish.rows[0]
+    ) {
+      return res.status(201).send(objOnline.rows);
+    } else if (
+      !objIsmsharif.rows[0] &&
+      !objVaqt.rows[0] &&
+      !objSana.rows[0] &&
+      !objOnline.rows[0]
+    ) {
+      return res.status(201).send(objYunalish.rows);
+    }
   } catch {
     res.send({ msg: "Error" });
   }
@@ -60,12 +112,12 @@ const elonCreate = async (req, res) => {
     let bulimValueValidation =
       bulimValue.trim() === ""
         ? res.status(401).send({ msg: "yunalish kiriting?" })
-        : bulimValue.trim();
+        : bulimValue.trim().toLowerCase();
 
     let ichkiBulimValueValidation =
       ichkiBulimValue.trim() === ""
         ? res.status(401).send({ msg: "ichki yunalish kiriting?" })
-        : ichkiBulimValue.trim();
+        : ichkiBulimValue.trim().toLowerCase();
 
     let radioValueValidation =
       radioValue.trim() === ""
@@ -80,12 +132,12 @@ const elonCreate = async (req, res) => {
     let ismsharifValidation =
       ismsharif.trim() === ""
         ? res.status(401).send({ msg: "ismsharif kiriting?" })
-        : ismsharif.trim();
+        : ismsharif.trim().toLowerCase();
 
     let professiyaValidation =
       professiya.trim() === ""
         ? res.status(401).send({ msg: "professiya kiriting?" })
-        : professiya.trim();
+        : professiya.trim().toLowerCase();
 
     let telifon1Validation =
       telifon1.trim() === ""
@@ -113,7 +165,7 @@ const elonCreate = async (req, res) => {
         : elon_img_url.trim();
 
     await pool.query(
-      `INSERT INTO elon(sana, vaqt, yunalish, ichki_yunalish, tadbir_turi, link, ismsharif, 
+      `INSERT INTO elon(sana, vaqt, yunalish, ichki_yunalish, tadbir_turi, link, ismsharif,
         professiya, telifon1, telifon2, elon_description, mavzumatni, img_url)
          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
       [
@@ -141,6 +193,6 @@ const elonCreate = async (req, res) => {
 
 export { elonCreate, getElon, elonHeaderSearch };
 
-// delete from elon where id = 'bb92dcb4-e02a-4c84-ad84-d36bf0ae196f';
+// delete from elon where id = 'ef6d4de6-aef1-462e-ab13-fe48deb8494e';
 
-// update elon set tasdiqlangan = true where id = '89a46a25-b9c1-4e52-8f8a-e79f64cfbf04';
+// update elon set tasdiqlangan = true where id = 'efe5c0f9-a153-4d6f-92f6-b5465aee730d';
