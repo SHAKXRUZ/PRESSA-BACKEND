@@ -1,9 +1,5 @@
 import Router from "express";
-import {
-  elonCreate,
-  getElon,
-  elonHeaderSearch,
-} from "../controller/elon.js";
+import { elonCreate, getElon, elonHeaderSearch } from "../controller/elon.js";
 
 import { elonlarValidation } from "../middleware/elon_validation_middleware.js";
 
