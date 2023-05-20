@@ -192,7 +192,3 @@ const elonCreate = async (req, res) => {
 };
 
 export { elonCreate, getElon, elonHeaderSearch };
-
-// delete from elon where id = 'ef6d4de6-aef1-462e-ab13-fe48deb8494e';
-
-// update elon set tasdiqlangan = true where id = 'efe5c0f9-a153-4d6f-92f6-b5465aee730d';
