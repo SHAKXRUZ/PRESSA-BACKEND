@@ -14,17 +14,10 @@
 
 // export default pool;
 
-const { Sequelize, DataTypes,UUIDV4 } = require("sequelize");
+const { Sequelize, DataTypes, UUIDV4 } = require("sequelize");
+require('dotenv/config')
 
-const sequelize = new Sequelize({
-  username: "postgres",
-  database: "pressa",
-  password: "20030625",
-  port: 5432,
-  host: "localhost",
-  dialect: "postgres",
-});
-
+const sequelize = new Sequelize(process.env.ELEPHANTSQLURL);
 sequelize
   .authenticate()
   .then(() => console.log("Connected"))
